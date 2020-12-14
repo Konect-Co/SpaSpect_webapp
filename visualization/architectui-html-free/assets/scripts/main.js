@@ -28445,19 +28445,14 @@
         p = {
             type: "line",
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM",
+                "10:00 PM", "11:00 PM", "12:00 AM"],
                 datasets: [{
-                    label: "My First dataset",
-                    backgroundColor: window.chartColors.red,
-                    borderColor: window.chartColors.red,
-                    data: [a(), a(), a(), a(), a(), a(), a()],
-                    fill: !1
-                }, {
-                    label: "My Second dataset",
+                    label: "Number of People",
                     fill: !1,
                     backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
-                    data: [a(), a(), a(), a(), a(), a(), a()]
+                    data: [78, 82, 86, 90, 88, 80, 75, 60, 48, 32, 19, 12, 5]
                 }]
             },
             options: {
@@ -28465,7 +28460,7 @@
                 maintainAspectRatio: !1,
                 title: {
                     display: !1,
-                    text: "Chart.js Line Chart"
+                    text: "People vs. Time Graph"
                 },
                 legend: {
                     display: !1
@@ -28491,35 +28486,35 @@
                 pointBorderWidth: "2",
                 scales: {
                     xAxes: [{
-                        display: !1,
+                        display: 1,
                         scaleLabel: {
                             display: !0,
-                            labelString: "Month"
+                            labelString: "Time of Day - 14, December 2020"
                         }
                     }],
                     yAxes: [{
-                        display: !1,
+                        display: 1,
                         scaleLabel: {
                             display: !0,
-                            labelString: "Value"
+                            labelString: "# of people"
                         }
                     }]
                 }
             }
         },
         f = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: ["Times Square, NY", "Las Vegas, NV", "Southlake, TX", "Milpitas, CA", "Atlanta, GA", "Dallas, TX", "Rochester, NY"],
             datasets: [{
-                label: "Dataset 1",
+                label: "# of People",
                 backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
                 borderColor: window.chartColors.red,
                 borderWidth: 1,
-                data: [a(), a(), a(), a(), a(), a(), a()]
+                data: [498, 450, 422, 402, 268, 261, 248]
             }, {
-                label: "Dataset 2",
+                label: "# of Violations",
                 backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
                 borderColor: window.chartColors.blue,
-                data: [a(), a(), a(), a(), a(), a(), a()]
+                data: [350, 333, 348, 343, 250, 200, 222, 120]
             }]
         };
     window.onload = function() {
