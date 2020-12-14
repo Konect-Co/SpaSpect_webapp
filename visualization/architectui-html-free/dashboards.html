@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <!--
     =========================================================
     * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -128,7 +129,11 @@
                                         </ul>
                                     </div>
                                     <div class="card-body">
+                                        
                                         <div class="tab-content">
+                                            <div id="map_plot">
+                                            </div>
+                                            <!--
                                             <div class="tab-pane fade show active" id="tabs-eg-77">
                                                 <div class="card mb-3 widget-chart widget-chart2 text-left w-100">
                                                     <div class="widget-chat-wrapper-outer">
@@ -254,7 +259,7 @@
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -274,6 +279,9 @@
                                         </div>
                                     </div>
                                     <div class="tab-content">
+                                        <div id="scatter_plot">
+                                        </div>
+                                        <!--
                                         <div class="tab-pane fade active show" id="tab-eg-55">
                                             <div class="widget-chart p-3">
                                                 <div style="height: 400px">
@@ -368,7 +376,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        -->
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -1064,4 +1074,114 @@
         </div>
     </div>
 <script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+<script>
+    var x_values = [-25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25];
+    var y_values = [-15, 15, -25, -5, -5, 0, 10, 5, -20, -15, 20];
+    var z_values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    var distanced = [true, true, true, false, false, false, true, true, false, false, true];
+    var masked = [true, true, true, true, true, true, true, true, true, true, true];;
+
+    var color_values = [];
+    var text_values = [];
+
+    var undistancedCount = 0;
+    var unmaskedCount = 0;
+
+    for (let i = 0; i < masked.length; i++) {
+        var unmasked = masked[i] == 2 ? true : false;
+        var undistanced = distanced[i] == 0 ? true : false;
+
+        var color = unmasked || undistanced ? 'rgba(255, 0, 0, 1)' : 'rgba(0, 255, 0, 1)';
+        color_values.push(color);
+
+        var distanced_txt = undistanced ? "undistanced" : "distanced";
+        var unmasked_txt = unmasked ? "unmasked" : "not unmasked";
+
+        var full_txt = distanced_txt + " and " + unmasked_txt;
+        text_values.push(full_txt);
+
+        if (undistanced)
+            undistancedCount++;
+        if (unmasked)
+            unmaskedCount++;
+    }
+
+    //==========================
+
+    var scatterData = [{
+        x: x_values,
+        y: y_values,
+        z: z_values,
+        name: 'people',
+        mode: 'markers',
+        marker: {
+            color: color_values,
+            size: 8,
+            line: {
+                width: 0.5
+            },
+            opacity: 0.8
+        },
+        type: 'scatter3d',
+        text: text_values
+    }];
+    var scatterLayout = {
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        }
+    };
+
+    Plotly.react('scatter_plot', scatterData, scatterLayout);
+</script>
+<script>
+    var lat_prefix = '38.899';
+    var lon_prefix = '-77.036';
+
+    var mapData = [{
+        type:'scattermapbox',
+        lat:[lat_prefix+'27',lat_prefix+'38',lat_prefix+'58',
+             lat_prefix+'39',lat_prefix+'22',lat_prefix+'42',
+             lat_prefix+'31',lat_prefix+'50',lat_prefix+'58',
+             lat_prefix+'16',lat_prefix+'594',lat_prefix+'26',
+             lat_prefix+'45'],
+        lon:[lon_prefix+'27',lon_prefix+'-23',lon_prefix+'50',
+             lon_prefix+'27',lon_prefix+'54',lon_prefix+'19',
+             lon_prefix+'28',lon_prefix+'24',lon_prefix+'29',
+             lon_prefix+'46',lon_prefix+'438',lon_prefix+'21',
+             lon_prefix+'39'],
+        mode:'marker',
+        marker: {
+            size:8
+        }
+    }]
+
+    var mapLayout = {
+        autosize: true,
+        hovermode:'closest',
+        mapbox: {
+            bearing:0,
+            center: {
+                lat:lat_prefix+'5',
+                lon:lon_prefix+'3'
+            },
+            pitch:0,
+            zoom:17
+        },
+        margin: {
+            l: 0,
+            r: 0,
+            b: 0,
+            t: 0
+        }
+    };
+
+    Plotly.setPlotConfig({
+        mapboxAccessToken: "pk.eyJ1Ijoic3Jhdml0MSIsImEiOiJja2JzY3NpcHgwMGJnMnZzYTY5ZWsyeDR6In0.CIOWohypCmf_oCzed32xRA"
+    });
+
+    Plotly.newPlot('map_plot', mapData, mapLayout);
+</script>
 </html>
