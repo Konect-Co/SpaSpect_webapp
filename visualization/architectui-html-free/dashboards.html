@@ -70,7 +70,7 @@
                                             <div class="widget-subheading"># of people</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>13</span></div>
+                                            <div class="widget-numbers text-white"><span id="totalCountVal">13</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                             <div class="widget-subheading">if < 6 feet</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>8</span></div>
+                                            <div class="widget-numbers text-white"><span id="undistancedCountVal">8</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                                             <div class="widget-subheading"># without face mask</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>3</span></div>
+                                            <div class="widget-numbers text-white"><span id="unmaskedCountVal">3</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                             <div class="widget-subheading"># of people violating regulations</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning"><span>11</span></div>
+                                            <div class="widget-numbers text-warning"><span id="violationsCountVal">11</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1190,9 +1190,13 @@
         }
     };
 
-    Plotly.react('scatter_plot', scatterData, scatterLayout);
+    Plotly.newPlot('scatter_plot', scatterData, scatterLayout);
 </script>
 <script>
+    Plotly.setPlotConfig({
+        mapboxAccessToken: "pk.eyJ1Ijoic3Jhdml0MSIsImEiOiJja2JzY3NpcHgwMGJnMnZzYTY5ZWsyeDR6In0.CIOWohypCmf_oCzed32xRA"
+    });
+
     var lat_prefix = '38.899';
     var lon_prefix = '-77.036';
 
@@ -1203,7 +1207,7 @@
              lat_prefix+'31',lat_prefix+'50',lat_prefix+'58',
              lat_prefix+'16',lat_prefix+'594',lat_prefix+'26',
              lat_prefix+'45'],
-        lon:[lon_prefix+'27',lon_prefix+'-23',lon_prefix+'50',
+        lon:[lon_prefix+'27',lon_prefix+'23',lon_prefix+'50',
              lon_prefix+'27',lon_prefix+'54',lon_prefix+'19',
              lon_prefix+'28',lon_prefix+'24',lon_prefix+'29',
              lon_prefix+'46',lon_prefix+'438',lon_prefix+'21',
@@ -1212,7 +1216,7 @@
         marker: {
             size:8
         }
-    }]
+    }];
 
     var mapLayout = {
         autosize: true,
@@ -1234,10 +1238,33 @@
         }
     };
 
-    Plotly.setPlotConfig({
-        mapboxAccessToken: "pk.eyJ1Ijoic3Jhdml0MSIsImEiOiJja2JzY3NpcHgwMGJnMnZzYTY5ZWsyeDR6In0.CIOWohypCmf_oCzed32xRA"
-    });
+    Plotly.newPlot('map_plot', mapData, mapLayout);
+</script>
+<script>
+    var lat_prefix = '38.899';
+    var lon_prefix = '-77.036';
 
+    var realtimeData = {
+        totalCount: 60,
+        undistancedCountVal: 20,
+        unmaskedCountVal: 30,
+        violationsCountVal: 40,
+        overheadMapData: {
+            "center": [lat_prefix, lon_prefix],
+            "latCoords":[lat_prefix+'27',lat_prefix+'38',lat_prefix+'58'],
+            "lonCoords":[lon_prefix+'27',lon_prefix+'23',lon_prefix+'50']
+        }
+    };
+
+    document.getElementById("totalCountVal").innerHTML = realtimeData["totalCount"];
+    document.getElementById("undistancedCountVal").innerHTML = realtimeData["undistancedCountVal"];
+    document.getElementById("unmaskedCountVal").innerHTML = realtimeData["unmaskedCountVal"];
+    document.getElementById("violationsCountVal").innerHTML = realtimeData["violationsCountVal"];
+    
+    mapData[0].lat = realtimeData.overheadMapData.latCoords;
+    mapData[0].lon = realtimeData.overheadMapData.lonCoords;
+    mapLayout.mapbox.center.lat = realtimeData.overheadMapData.center[0];
+    mapLayout.mapbox.center.lon = realtimeData.overheadMapData.center[1];
     Plotly.newPlot('map_plot', mapData, mapLayout);
 </script>
 </html>
