@@ -1,3 +1,4 @@
+var mysql = require('mysql');
 var express = require("express");
 const app = express();
 
@@ -7,10 +8,66 @@ app.use(
   })
 );
 
-app.post('/sendData', function (req, res) {
-  res.send('POST request to the homepage');
-  console.log('Received data from camera');
+function updateRecord(realtimeData) {
+	var con = mysql.createConnection({
+	    host: 'localhost',
+	    user: 'root',
+	    password: 'mypass123',
+	    database: 'spaspect_data'
+	});
 
+	con.connect();
+
+    var sql_update1 = "UPDATE SpaSpect_realtime SET X3D_vals = " + realtimeData["X3D_vals"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update2 = "UPDATE SpaSpect_realtime SET Y3D_vals = " + realtimeData["Y3D_vals"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update3 = "UPDATE SpaSpect_realtime SET Z3D_vals = " + realtimeData["Z3D_vals"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update4 = "UPDATE SpaSpect_realtime SET total_count_frame = " + realtimeData["total_count_frame"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update5 = "UPDATE SpaSpect_realtime SET undistanced = " + realtimeData["undistanced"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update6 = "UPDATE SpaSpect_realtime SET unmasked = " + realtimeData["unmasked"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update7 = "UPDATE SpaSpect_realtime SET violations = " + realtimeData["violations"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update8 = "UPDATE SpaSpect_realtime SET time_elapsed = " + realtimeData["time_elapsed"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+    var sql_update9 = "UPDATE SpaSpect_realtime SET total_count_start = " + realtimeData["total_count_start"] + " WHERE Camera_num = " + realtimeData["Camera_num"];
+
+    con.query(sql_update1, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update2, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update3, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update4, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update5, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update6, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update7, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update8, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.query(sql_update9, function(err, rows, fields){
+	    if(err) throw err;
+    });
+
+    con.end();
+}
+
+app.post('/sendData', function (req, res) {
   /*
 	Interface of the application server to the database.
 
@@ -18,10 +75,36 @@ app.post('/sendData', function (req, res) {
 	2. Add data to the MySql Database.
 	3. Return/Conclude the function as necessary.
   */
+
+  var data = "";
+  req.on('data', chunk => data += chunk );
+
+  req.on('end', () => {
+  	var realtimeData = JSON.parse(data);
+  	updateRecord(realtimeData);
+  });
+
+  res.send('POST request to the homepage');
 });
 
 app.get('/requestData', function (req, res) {
   res.send('GET request to the homepage');
+
+  /*
+	Return:
+		- people vs time graph
+		- cross location graph
+		- violation per hour
+		- enforcement status
+		- total count, unmasked count, undistanced count, violations count
+		- birds-eye view
+		- 3D coordinates
+		- time elapsed
+		- total count since start
+		- average distance
+		- average # of unmasked
+		- average # of undistanced
+  */
 
   /*
 	Interface of the application server to the browser.
