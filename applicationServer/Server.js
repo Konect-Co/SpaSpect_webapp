@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+//var mysql = require('mysql');
 var express = require("express");
 const app = express();
 
@@ -87,8 +87,52 @@ app.post('/sendData', function (req, res) {
   res.send('POST request to the homepage');
 });
 
-app.get('/requestData', function (req, res) {
-  res.send('GET request to the homepage');
+app.post('/requestData', function (req, res) {
+//res.send('GET request to the homepage');
+
+var data = "";
+req.on('data', chunk => data += chunk );
+
+req.on('end', () => {
+
+  console.log(JSON.parse(data));
+  var realtimeData = JSON.parse(data);
+  var lat_prefix = '38.899';
+  var lon_prefix = '-77.036';
+
+  var all_spaspect_data = {
+        realtime: {
+            location: "Times Square, NY",
+            X3D_vals: 2.734,
+            Y3D_vals: 9.672,
+            Z3D_vals: 10.456,
+            total_count_frame: 80,
+            undistanced: 20,
+            unmasked: 30,
+            violations: 40,
+            time_elapsed: 2200,
+            total_count_start: 4598,
+            overheadMapData: {
+                "center": [lat_prefix, lon_prefix],
+                "latCoords":[lat_prefix+'27',lat_prefix+'38',lat_prefix+'58'],
+                "lonCoords":[lon_prefix+'27',lon_prefix+'23',lon_prefix+'50']
+            }
+        },
+        aggregatetime: {
+            enforcement_status: "Medium",
+            average_dist: 4.32,
+            average_unmasked: 9,
+            average_undistanced: 5,
+            cl_val: 980,
+            violations_per_hr: 323
+        }
+    };
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(all_spaspect_data));
+});
+
+
 
   /*
 	Return:
