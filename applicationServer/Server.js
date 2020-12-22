@@ -1,6 +1,7 @@
 //var mysql = require('mysql');
 var express = require("express");
 const app = express();
+var get_data = require("./modules.js"); 
 
 app.use(
   express.urlencoded({
@@ -112,6 +113,7 @@ req.on('end', () => {
             violations: 40,
             time_elapsed: 2200,
             total_count_start: 4598,
+            people_time: get_data.getPeople_time(),
             overheadMapData: {
                 "center": [lat_prefix, lon_prefix],
                 "latCoords":[lat_prefix+'27',lat_prefix+'38',lat_prefix+'58'],
