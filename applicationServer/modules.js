@@ -33,19 +33,45 @@ function get_enforcement_status() {
 	return "Medium";
 }
 
+function get_average_dist(){
+	return 4.32;
+}
+
+function get_average_unmasked(){
+	return 9;
+}
+
+function get_average_undistanced(){
+	return 5;
+}
+
+function get_cl_val(){
+	return 980;
+}
+
+function get_violations_per_hr(){
+	return 323;
+}
+
 //TODO: Santript - Add the remaining helper functions for get_aggregate data
 //No need to implement them now. Just use enforcement status as an example.
 
+
 function get_aggregate_data() {
 	var enforcement_status_value = get_enforcement_status();
+	var average_dist_value = get_average_dist();
+	var average_unmasked_value = get_average_unmasked();
+	var average_undistanced_value = get_average_undistanced();
+	var cl_val_value = get_cl_val();
+	var violations_per_hr_value = get_violations_per_hr();
 
 	return {
 		enforcement_status: enforcement_status_value,
-		average_dist: 4.32,
-		average_unmasked: 9,
-		average_undistanced: 5,
-		cl_val: 980,
-		violations_per_hr: 323
+		average_dist: average_dist_value,
+		average_unmasked: average_unmasked_value,
+		average_undistanced: average_unmasked_value,
+		cl_val: cl_val_value,
+		violations_per_hr: violations_per_hr_value
 	};
 }
 
