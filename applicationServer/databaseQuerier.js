@@ -49,7 +49,7 @@ function get_aggregate_data() {
 	};
 }
 
-function get_full_data(dashboardParameters) {
+function get_full_data() {
     var realtime_data = get_realtime_data();
     var aggregate_data = get_aggregate_data();
 

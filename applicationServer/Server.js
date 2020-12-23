@@ -1,7 +1,9 @@
 //var mysql = require('mysql');
 var express = require("express");
 const app = express();
-var get_data = require("./modules.js"); 
+var databaseQuerier = require("./databaseQuerier"); 
+
+
 
 app.use(
   express.urlencoded({
@@ -89,52 +91,18 @@ app.post('/sendData', function (req, res) {
 });
 
 app.post('/requestData', function (req, res) {
-//res.send('GET request to the homepage');
 
 var data = "";
-req.on('data', chunk => data += chunk );
+  req.on('data', chunk => data += chunk );
 
-req.on('end', () => {
+  req.on('end', () => {
+    var dashboardParameters = JSON.parse(data);
 
-  console.log(JSON.parse(data));
-  var realtimeData = JSON.parse(data);
-  var lat_prefix = '38.899';
-  var lon_prefix = '-77.036';
-
-  var all_spaspect_data = {
-        realtime: {
-            location: "Times Square, NY",
-            X3D_vals: 2.734,
-            Y3D_vals: 9.672,
-            Z3D_vals: 10.456,
-            total_count_frame: 80,
-            undistanced: 20,
-            unmasked: 30,
-            violations: 40,
-            time_elapsed: 2200,
-            total_count_start: 4598,
-            people_time: get_data.getPeople_time(),
-            overheadMapData: {
-                "center": [lat_prefix, lon_prefix],
-                "latCoords":[lat_prefix+'27',lat_prefix+'38',lat_prefix+'58'],
-                "lonCoords":[lon_prefix+'27',lon_prefix+'23',lon_prefix+'50']
-            }
-        },
-        aggregatetime: {
-            enforcement_status: "Medium",
-            average_dist: 4.32,
-            average_unmasked: 9,
-            average_undistanced: 5,
-            cl_val: 980,
-            violations_per_hr: 323
-        }
-    };
+    var dashboardData = databaseQuerier.get_full_data(dashboardParameters);
 
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(all_spaspect_data));
-});
-
-
+    res.end(JSON.stringify(dashboardData));
+  });
 
   /*
 	Return:
@@ -159,6 +127,10 @@ req.on('end', () => {
 	2. Query MySql database for information and return to HTTP request.
 	3. Conclude the function as necessary.
   */
+});
+
+app.get('/', function (req, res) {
+  res.end("GET request to the homepage");
 });
 
 var PORT = 3000;
