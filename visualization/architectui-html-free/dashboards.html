@@ -227,7 +227,7 @@
                                             <!--<div class="widget-subheading">Good, Medium, Bad, Critical</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>Critical</span></div>
+                                            <div class="widget-numbers text-white"><span id = "enforcement_status_val">Critical</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +240,7 @@
                                             <!--<div class="widget-subheading">Distance between people</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>5.2</span></div>
+                                            <div class="widget-numbers text-white"><span id = "average_dist_val">5.2</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -253,7 +253,7 @@
                                             <!--<div class="widget-subheading"># without face mask</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span>8</span></div>
+                                            <div class="widget-numbers text-white"><span id = "average_unmasked_val">8</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -266,7 +266,7 @@
                                             <!--<div class="widget-subheading">Revenue streams</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning"><span>20</span></div>
+                                            <div class="widget-numbers text-warning"><span id = "average_undistanced_val">20</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -757,12 +757,12 @@
     var lon_prefix = '-77.036';
 
     var realtimeData = {
-        Camera_num: 1,
-        Location: "Times Square, NY",
+        //camera_num: 1,
+        location: "Times Square, NY",
         X3D_vals: 2.734,
         Y3D_vals: 9.672,
         Z3D_vals: 10.456,
-        total_count_frame: 60,
+        total_count_frame: 80,
         undistanced: 20,
         unmasked: 30,
         violations: 40,
@@ -775,15 +775,71 @@
         }
     };
 
-    document.getElementById("totalCountVal").innerHTML = realtimeData["totalCount"];
-    document.getElementById("undistancedCountVal").innerHTML = realtimeData["undistancedCountVal"];
-    document.getElementById("unmaskedCountVal").innerHTML = realtimeData["unmaskedCountVal"];
-    document.getElementById("violationsCountVal").innerHTML = realtimeData["violationsCountVal"];
+    var aggregateData = {
+        enforcement_status: "Medium",
+        average_dist: 4.32,
+        average_unmasked: 9,
+        average_undistanced: 5,
+        cl_val: 980,
+        violations_per_hr: 323
+    };
+
+
+    var full_data = {
+   "realtime": {
+       "location": "Times Square, NY",
+       "spatial_coordinates": {
+           "X3D_vals": [2.734],
+           "Y3D_vals": [9.672],
+           "Z3D_vals": [10.456]
+       },
+       "tallies": {
+           "total_count_frame": 80,
+           "undistanced": 20,
+           "unmasked": 30,
+           "violations": 40
+       },
+       "time_elapsed": 2200,
+       "total_count_start": 4598,
+       "people_time": [12, 3, 6, 109, 10],
+       "overheadMapData": {
+           "center": [38.899, -77.036],
+           "latCoords": [38.89927, 38.89938, 38.89958],
+           "lonCoords": [-77.03627, -77.03623, -77.03650]
+       }
+   },
+   "aggregatetime": {
+       "enforcement_status": "Medium",
+       "average_dist": 4.32,
+       "average_unmasked": 9,
+       "average_undistanced": 9,
+       "cl_val": 980,
+       "violations_per_hr": 323
+   }
+};
+
+
+
+    /*REALTIME*/
+
+    document.getElementById("totalCountVal").innerHTML = full_data["realtime"]["tallies"]["total_count_frame"];
+    document.getElementById("undistancedCountVal").innerHTML = full_data["realtime"]["tallies"]["undistanced"];
+    document.getElementById("unmaskedCountVal").innerHTML = full_data["realtime"]["tallies"]["unmasked"];
+    document.getElementById("violationsCountVal").innerHTML = full_data["realtime"]["tallies"]["violations"];
+
+    /*AGGREGATE*/
+
+    document.getElementById("enforcement_status_val").innerHTML = full_data["aggregatetime"]["enforcement_status"];
+    document.getElementById("average_dist_val").innerHTML = full_data["aggregatetime"]["average_dist"];
+    document.getElementById("average_unmasked_val").innerHTML = full_data["aggregatetime"]["average_unmasked"];
+    document.getElementById("average_undistanced_val").innerHTML = full_data["aggregatetime"]["average_undistanced"];
+    //document.getElementById("cl_val").innerHTML = full_data["aggregatetime"]["cl_val"];
+    //document.getElementById("violations_per_hr_val").innerHTML = full_data["aggregatetime"]["violations_per_hr"];
     
-    mapData[0].lat = realtimeData.overheadMapData.latCoords;
-    mapData[0].lon = realtimeData.overheadMapData.lonCoords;
-    mapLayout.mapbox.center.lat = realtimeData.overheadMapData.center[0];
-    mapLayout.mapbox.center.lon = realtimeData.overheadMapData.center[1];
+    mapData[0].lat = full_data.realtime.overheadMapData.latCoords;
+    mapData[0].lon = full_data.realtime.overheadMapData.lonCoords;
+    mapLayout.mapbox.center.lat = full_data.realtime.overheadMapData.center[0];
+    mapLayout.mapbox.center.lon = full_data.realtime.overheadMapData.center[1];
     Plotly.newPlot('map_plot', mapData, mapLayout);
 </script>
 </html>
