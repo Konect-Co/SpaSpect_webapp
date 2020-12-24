@@ -42,9 +42,9 @@ function getOverheadMapData() {
     var lon_prefix = '-77.036';
 
 	var mapData = {
-		"center": [lat_prefix, lon_prefix],
-		"latCoords":[lat_prefix+'27',lat_prefix+'38',lat_prefix+'58'],
-		"lonCoords":[lon_prefix+'27',lon_prefix+'23',lon_prefix+'50']
+		"center": [parseFloat(lat_prefix), parseFloat(lon_prefix)],
+		"latCoords":[parseFloat(lat_prefix+'27'),parseFloat(lat_prefix+'38'),parseFloat(lat_prefix+'58')],
+		"lonCoords":[parseFloat(lon_prefix+'27'),parseFloat(lon_prefix+'23'),parseFloat(lon_prefix+'50')]
 	};
 	return mapData;
 }
