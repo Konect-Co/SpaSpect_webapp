@@ -820,7 +820,8 @@
 
 
 var dashboardDataRequest  = new XMLHttpRequest();
-dashboardDataRequest.open("POST", "http://3.137.221.232/requestData");
+//dashboardDataRequest.open("POST", "http://3.137.221.232/requestData");
+dashboardDataRequest.open("POST", "http://18.188.84.0/requestData");
 dashboardDataRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 dashboardDataRequest.send(JSON.stringify({
     "option1": "value1"
