@@ -1,10 +1,36 @@
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+	    host: 'localhost',
+	    user: 'root',
+	    password: 'mypass123',
+	    database: 'testDatabase'
+});
+
+con.connect();
+
 function getLocationVal() {
 	var location = "Times Square, NY";
 	return location;
 }
 
 function getPeopleTime() {
-	var ppl_time = [12,3,6,109,10];
+
+	var query1 = "SELECT the_time, numPeople FROM Camera_1";
+
+	var ppl_time = null;
+
+	con.query(query1, function(err, result, fields){
+		if(err) throw err;
+		ppl_time = JSON.parse(JSON.stringify(result));
+		console.log("MySql has replied");
+	});
+	console.log("Sent request to MySql");
+
+	while (ppl_time == null) {
+		//wait
+	}
+
 	return ppl_time;
 }
 
@@ -126,4 +152,7 @@ function get_full_data(dashboardParameters) {
     return all_spaspect_data
 }
 
-exports.get_full_data = get_full_data;
+getPeopleTime();
+con.end();
+
+//exports.get_full_data = get_full_data;
