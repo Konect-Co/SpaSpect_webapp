@@ -9,29 +9,22 @@ var con = mysql.createConnection({
 
 con.connect();
 
-function getLocationVal() {
-	var location = "Times Square, NY";
-	return location;
+//HELPER FUNCTION
+function sendQuery(query, callback) {
+	con.query(query, function(err, result, fields){
+		if(err) 
+			callback(err, null);
+		else
+			callback(null, result);
+	});
 }
 
-function getPeopleTime() {
+function getLocationVal(callback) {
+	sendQuery("SELECT location FROM Camera_1_Metadata", callback);
+}
 
-	var query1 = "SELECT the_time, numPeople FROM Camera_1";
-
-	var ppl_time = null;
-
-	con.query(query1, function(err, result, fields){
-		if(err) throw err;
-		ppl_time = JSON.parse(JSON.stringify(result));
-		console.log("MySql has replied");
-	});
-	console.log("Sent request to MySql");
-
-	while (ppl_time == null) {
-		//wait
-	}
-
-	return ppl_time;
+function getPeopleTime(callback) {
+	sendQuery("SELECT the_time, numPeople FROM Camera_1", callback);
 }
 
 function getSpatialCoordinates() {
@@ -75,24 +68,24 @@ function getOverheadMapData() {
 	return mapData;
 }
 
-function get_realtime_data() {
-    var location_Val = getLocationVal();
-    var people_time_val = getPeopleTime();
-    var spatial_coordinates_val = getSpatialCoordinates();
-    var tallies_val = getTallies();
-    var time_elapsed_val = getTimeElapsed();
-    var total_count_val = getTotalCount();
-    var overhead_map_val = getOverheadMapData();
-
-	return {
-		location: location_Val,
-		spatial_coordinates: spatial_coordinates_val,
-		tallies: tallies_val,
-		time_elapsed: time_elapsed_val,
-		total_count_start: total_count_val,
-		people_time: people_time_val,
-		overheadMapData: overhead_map_val
+function get_realtime_data(callback) {
+	returnVal = {
+		location: null,
+		spatial_coordinates: null,
+		tallies: null,
+		time_elapsed: null,
+		total_count_start: null,
+		people_time: null,
+		overheadMapData: null
 	};
+
+	getPeopleTime(function(err, people_time_val) {
+		returnVal.people_time = people_time_val;
+		getLocationVal(function(err, location_val) {
+			returnVal.location = location_val;
+		});
+		callback(returnVal);
+	});
 }
 
 function get_enforcement_status() {
@@ -152,7 +145,10 @@ function get_full_data(dashboardParameters) {
     return all_spaspect_data
 }
 
-getPeopleTime();
+get_realtime_data(function(data) {
+	console.log(data);
+});
+
 con.end();
 
 //exports.get_full_data = get_full_data;
