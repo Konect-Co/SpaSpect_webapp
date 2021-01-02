@@ -12,37 +12,39 @@ con.connect();
 //HELPER FUNCTION
 function sendQuery(query, callback) {
 	con.query(query, function(err, result, fields){
-		if(err) 
+		if(err) {
+			console.log("Error raised", err);
 			callback(err, null);
-		else
+		}
+		else {
 			callback(null, result);
+		}
 	});
 }
 
-function getLocationVal(callback) {
-	sendQuery("SELECT location FROM Camera_1_Metadata", callback);
+function getMetadata(callback) {
+	sendQuery("SELECT * FROM Camera_1_Metadata", callback);
 }
 
 function getPeopleTime(callback) {
 	sendQuery("SELECT the_time, numPeople FROM Camera_1", callback);
 }
 
-function getSpatialCoordinates() {
-	var spatial_coordinates = {
-		X3D_vals: [2.734],
-		Y3D_vals: [9.672],
-		Z3D_vals: [10.456]
-	};
-	return spatial_coordinates;
+function getLatestRow(callback) {
+	sendQuery("SELECT * FROM Camera_1 ORDER BY the_time DESC LIMIT 1", callback);
 }
 
-function getTallies() {
+function getTallies(latestRow) {
 	var tallies = {
 		total_count_frame: 80,
 		undistanced: 20,
 		unmasked: 30,
 		violations: 40
 	};
+	tallies.undistanced = latestRow.numUndistanced;
+	tallies.unmasked = latestRow.numUnmasked;
+	tallies.violations = latestRow.numViolations;
+	tallies.total_count_frame = latestRow.numPeople;
 	return tallies;
 }
 
@@ -56,22 +58,32 @@ function getTotalCount() {
 	return totalCount;
 }
 
-function getOverheadMapData() {
+function getOverheadMapData(latestRow, metadata) {
     var lat_prefix = '38.899';
     var lon_prefix = '-77.036';
 
 	var mapData = {
-		"center": [parseFloat(lat_prefix), parseFloat(lon_prefix)],
-		"latCoords":[parseFloat(lat_prefix+'27'),parseFloat(lat_prefix+'38'),parseFloat(lat_prefix+'58')],
-		"lonCoords":[parseFloat(lon_prefix+'27'),parseFloat(lon_prefix+'23'),parseFloat(lon_prefix+'50')]
+		"center": null,
+		"latCoords":[],
+		"lonCoords":[]
 	};
+
+	temp_locations = JSON.parse(latestRow.locations);
+
+	console.log(temp_locations);
+
+	for (let i = 0; i < latestRow.locations.length; i++) {
+		mapData.latCoords.push(temp_locations[i][0]);
+		mapData.lonCoords.push(temp_locations[i][1]);
+	}
+	mapData.center = JSON.parse(metadata.cameraCoordinates);
+
 	return mapData;
 }
 
 function get_realtime_data(callback) {
 	returnVal = {
 		location: null,
-		spatial_coordinates: null,
 		tallies: null,
 		time_elapsed: null,
 		total_count_start: null,
@@ -79,12 +91,21 @@ function get_realtime_data(callback) {
 		overheadMapData: null
 	};
 
-	getPeopleTime(function(err, people_time_val) {
-		returnVal.people_time = people_time_val;
-		getLocationVal(function(err, location_val) {
-			returnVal.location = location_val;
+	getMetadata(function(err, metadata) {
+		metadata = JSON.parse(JSON.stringify(metadata))[0];
+		returnVal.location = metadata.location;
+		getPeopleTime(function(err, people_time_val) {
+			returnVal.people_time = JSON.parse(JSON.stringify(people_time_val));
+			getLatestRow(function(err, latestRowVal) {
+				//returnVal.latestRowVal = latestRowVal;
+				latestRowVal = JSON.parse(JSON.stringify(latestRowVal))[0];
+				console.log(latestRowVal);
+				returnVal.tallies = getTallies(latestRowVal);
+				returnVal.overheadMapData = getOverheadMapData(latestRowVal, metadata);
+				console.log(latestRowVal);
+				callback(returnVal);
+			});
 		});
-		callback(returnVal);
 	});
 }
 
@@ -149,6 +170,6 @@ get_realtime_data(function(data) {
 	console.log(data);
 });
 
-con.end();
+//con.end();
 
 //exports.get_full_data = get_full_data;
