@@ -70,9 +70,8 @@ function getOverheadMapData(latestRow, metadata) {
 
 	temp_locations = JSON.parse(latestRow.locations);
 
-	console.log(temp_locations);
 
-	for (let i = 0; i < latestRow.locations.length; i++) {
+	for (let i = 0; i < temp_locations.length; i++) {	
 		mapData.latCoords.push(temp_locations[i][0]);
 		mapData.lonCoords.push(temp_locations[i][1]);
 	}
@@ -99,10 +98,8 @@ function get_realtime_data(callback) {
 			getLatestRow(function(err, latestRowVal) {
 				//returnVal.latestRowVal = latestRowVal;
 				latestRowVal = JSON.parse(JSON.stringify(latestRowVal))[0];
-				console.log(latestRowVal);
 				returnVal.tallies = getTallies(latestRowVal);
 				returnVal.overheadMapData = getOverheadMapData(latestRowVal, metadata);
-				console.log(latestRowVal);
 				callback(returnVal);
 			});
 		});
@@ -125,7 +122,7 @@ function get_average_undistanced(){
 	return 5;
 }
 
-function get_cl_val(){
+function get_average_num_people(){
 	return 980;
 }
 
@@ -137,22 +134,22 @@ function get_violations_per_hr(){
 //No need to implement them now. Just use enforcement status as an example.
 
 
-function get_aggregate_data() {
+function get_aggregate_data(callback) {
 	var enforcement_status_value = get_enforcement_status();
 	var average_dist_value = get_average_dist();
 	var average_unmasked_value = get_average_unmasked();
 	var average_undistanced_value = get_average_undistanced();
-	var cl_val_value = get_cl_val();
+	var average_num_people_value = get_average_num_people();
 	var violations_per_hr_value = get_violations_per_hr();
 
-	return {
+	callback({
 		enforcement_status: enforcement_status_value,
 		average_dist: average_dist_value,
 		average_unmasked: average_unmasked_value,
 		average_undistanced: average_unmasked_value,
-		cl_val: cl_val_value,
+		average_num_people: average_num_people_value,
 		violations_per_hr: violations_per_hr_value
-	};
+	});
 }
 
 function get_full_data(dashboardParameters) {
@@ -169,6 +166,10 @@ function get_full_data(dashboardParameters) {
 get_realtime_data(function(data) {
 	console.log(data);
 });
+
+get_aggregate_data(function(data){
+	console.log(data);
+})
 
 //con.end();
 
