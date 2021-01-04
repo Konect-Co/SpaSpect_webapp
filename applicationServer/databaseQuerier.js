@@ -48,16 +48,6 @@ function getTallies(latestRow) {
 	return tallies;
 }
 
-function getTimeElapsed() {
-	var timeElapsed = 2200;
-	return timeElapsed;
-}
-
-function getTotalCount() {
-	var totalCount = 4598;
-	return totalCount;
-}
-
 function getOverheadMapData(latestRow, metadata) {
     var lat_prefix = '38.899';
     var lon_prefix = '-77.036';
@@ -84,8 +74,6 @@ function get_realtime_data(callback) {
 	returnVal = {
 		location: null,
 		tallies: null,
-		time_elapsed: null,
-		total_count_start: null,
 		people_time: null,
 		overheadMapData: null
 	};
@@ -106,61 +94,72 @@ function get_realtime_data(callback) {
 	});
 }
 
-function get_enforcement_status() {
-	return "Medium";
+function get_enforcement_status(callback) {
+	sendQuery("SELECT * FROM Camera_1_Aggregate", function(err, data) {
+		if (!err)
+			data = JSON.parse(JSON.stringify(data))[0].enforcement_status;
+		callback(err, data);
+	});
 }
 
-function get_average_dist(){
+function get_rows_in_range(callback) {
+	date_beginning = "'2020-12-29 00:23:20'";
+	date_end = "'2020-12-29 00:25:20'";
+	sendQuery("select * from Camera_1 WHERE the_time BETWEEN " + date_beginning + " and " + date_end + ";", function(err, data) {
+                if (!err)
+                        data = JSON.parse(JSON.stringify(data));
+                callback(err, data);
+
+	});
+}
+
+function get_average_dist(relevantRows){
 	return 4.32;
 }
 
-function get_average_unmasked(){
+function get_average_unmasked(relevantRows){
 	return 9;
 }
 
-function get_average_undistanced(){
+function get_average_undistanced(relevantRows){
 	return 5;
 }
 
-function get_average_num_people(){
+function get_average_num_people(relevantRows){
 	return 980;
 }
 
-function get_violations_per_hr(){
-	return 323;
-}
 
 //TODO: Santript - Add the remaining helper functions for get_aggregate data
 //No need to implement them now. Just use enforcement status as an example.
 
 
 function get_aggregate_data(callback) {
-	var enforcement_status_value = get_enforcement_status();
-	var average_dist_value = get_average_dist();
-	var average_unmasked_value = get_average_unmasked();
-	var average_undistanced_value = get_average_undistanced();
-	var average_num_people_value = get_average_num_people();
-	var violations_per_hr_value = get_violations_per_hr();
 
-	callback({
-		enforcement_status: enforcement_status_value,
-		average_dist: average_dist_value,
-		average_unmasked: average_unmasked_value,
-		average_undistanced: average_unmasked_value,
-		average_num_people: average_num_people_value,
-		violations_per_hr: violations_per_hr_value
+	returnVal = {
+		enforcement_status: null,
+		average_dist: null,
+		average_unmasked: null,
+		average_undistanced: null,
+		average_num_people: null,
+	};
+
+	get_rows_in_range(function(err, relevantRows) {
+		get_enforcement_status(function(err, enforcement_status_value) {
+			var average_dist_value = get_average_dist(relevantRows);
+			var average_unmasked_value = get_average_unmasked(relevantRows);
+			var average_undistanced_value = get_average_undistanced(relevantRows);
+			var average_num_people_value = get_average_num_people(relevantRows);
+
+			callback({
+				enforcement_status: enforcement_status_value,
+				average_dist: average_dist_value,
+				average_unmasked: average_unmasked_value,
+				average_undistanced: average_unmasked_value,
+				average_num_people: average_num_people_value,
+			});
+		});
 	});
-}
-
-function get_full_data(dashboardParameters) {
-    var realtime_data = get_realtime_data();
-    var aggregate_data = get_aggregate_data();
-
-    var all_spaspect_data = {
-        realtime: realtime_data,
-        aggregatetime: aggregate_data
-    };
-    return all_spaspect_data
 }
 
 get_realtime_data(function(data) {
@@ -169,7 +168,13 @@ get_realtime_data(function(data) {
 
 get_aggregate_data(function(data){
 	console.log(data);
-})
+});
+
+/*
+get_rows_in_range(function(err, data) {
+	console.log(data);
+});
+*/
 
 //con.end();
 
