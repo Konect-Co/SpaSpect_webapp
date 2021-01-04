@@ -72,10 +72,6 @@ function getOverheadMapData(latestRow, metadata) {
 
 function get_realtime_data(callback) {
 	returnVal = {
-		location: null,
-		tallies: null,
-		people_time: null,
-		overheadMapData: null
 	};
 
 	getMetadata(function(err, metadata) {
@@ -135,15 +131,6 @@ function get_average_num_people(relevantRows){
 
 
 function get_aggregate_data(callback) {
-
-	returnVal = {
-		enforcement_status: null,
-		average_dist: null,
-		average_unmasked: null,
-		average_undistanced: null,
-		average_num_people: null,
-	};
-
 	get_rows_in_range(function(err, relevantRows) {
 		get_enforcement_status(function(err, enforcement_status_value) {
 			var average_dist_value = get_average_dist(relevantRows);
@@ -162,20 +149,5 @@ function get_aggregate_data(callback) {
 	});
 }
 
-get_realtime_data(function(data) {
-	console.log(data);
-});
-
-get_aggregate_data(function(data){
-	console.log(data);
-});
-
-/*
-get_rows_in_range(function(err, data) {
-	console.log(data);
-});
-*/
-
-//con.end();
-
-//exports.get_full_data = get_full_data;
+exports.get_realtime_data = get_realtime_data;
+exports.get_aggregate_data = get_aggregate_data;
