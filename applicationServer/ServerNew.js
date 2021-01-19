@@ -98,10 +98,16 @@ var data = "";
   req.on('end', () => {
     var dashboardParameters = JSON.parse(data);
 
-    var dashboardData = databaseQuerier.get_full_data(dashboardParameters);
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(dashboardData));
+    databaseQuerier.get_realtime_data(function(realtime_data){
+	    databaseQuerier.get_aggregate_data(function(aggregate_data){
+		    var dashboardData = {
+			    "realtime": realtime_data,
+			    "aggregate": aggregate_data
+		    };
+		    res.setHeader('Content-Type', 'application/json');
+		    res.end(JSON.stringify(dashboardData));
+	    });
+    });
   });
 
   /*

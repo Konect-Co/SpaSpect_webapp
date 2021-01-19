@@ -1,30 +1,8 @@
+//var mysql = require('mysql');
 var express = require("express");
 const app = express();
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
-app.use("", express.static(__dirname));
-
-app.post('/requestData', function (req, res) {
-	var data = "";
-	req.on('data', chunk => data += chunk );
-
-	req.on('end', () => {
-		//var dashboardParameters = JSON.parse(data);
-
-		var dashboardDataRequest  = new XMLHttpRequest();
-		dashboardDataRequest.open("POST", "http://3.137.221.232/requestData");
-		dashboardDataRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		dashboardDataRequest.send(data);
-		dashboardDataRequest.onload = function(e) {
-			var responseText = dashboardDataRequest.responseText;
-
-			res.setHeader('Content-Type', 'application/json');
-			res.end(responseText);
-		}
-	});
-});
-
 var databaseQuerier = require("./databaseQuerier"); 
+
 
 
 app.use(
@@ -95,6 +73,7 @@ function updateRecord(realtimeData) {
 app.post('/sendData', function (req, res) {
   /*
 	Interface of the application server to the database.
+
 	1. Check if data is correctly formatted.
 	2. Add data to the MySql Database.
 	3. Return/Conclude the function as necessary.
@@ -149,10 +128,15 @@ var data = "";
 
   /*
 	Interface of the application server to the browser.
+
 	1. Check if request for data is valid and correctly formatted.
 	2. Query MySql database for information and return to HTTP request.
 	3. Conclude the function as necessary.
   */
+});
+
+app.get('/', function (req, res) {
+  res.end("GET request to the homepage");
 });
 
 var PORT = 3000;
