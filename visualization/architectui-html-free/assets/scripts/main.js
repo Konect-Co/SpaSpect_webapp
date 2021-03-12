@@ -28445,14 +28445,14 @@
         p = {
             type: "line",
             data: {
-                labels: ["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM",
-                "10:00 PM", "11:00 PM", "12:00 AM"],
+                labels: ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM",
+                "7:00 PM", "8:00 PM"],
                 datasets: [{
                     label: "Number of People",
                     fill: !1,
                     backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
-                    data: [78, 82, 86, 90, 88, 80, 75, 60, 48, 32, 19, 12, 5]
+                    data: [18, 38, 56, 80, 92, 104, 108, 110, 102, 60, 44, 23]
                 }]
             },
             options: {
@@ -28460,7 +28460,7 @@
                 maintainAspectRatio: !1,
                 title: {
                     display: !1,
-                    text: "People vs. Time Graph"
+                    text: "People vs. Time Of Day"
                 },
                 legend: {
                     display: !1
@@ -28503,20 +28503,66 @@
             }
         },
         f = {
-            labels: ["Times Square, NY", "Las Vegas, NV", "Southlake, TX", "Milpitas, CA", "Atlanta, GA", "Dallas, TX", "Rochester, NY"],
+            labels: ["Male", "Female", "Other"],
             datasets: [{
-                label: "# of People",
+                label: "Avg Time Spent (min)",
                 backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
                 borderColor: window.chartColors.red,
                 borderWidth: 1,
-                data: [498, 450, 422, 402, 268, 261, 248]
+                data: [33, 37, 21]
             }, {
-                label: "# of Violations",
+                label: "Avg # Of Items",
                 backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
                 borderColor: window.chartColors.blue,
-                data: [350, 333, 348, 343, 250, 200, 222, 120]
+                data: [12, 18, 4]
+            }, {
+                label: "Overall Value (1-10)",
+                backgroundColor: o(window.chartColors.green).alpha(.5).rgbString(),
+                borderColor: window.chartColors.green,
+                data: [7, 9, 5]
+            }]
+        },
+        agef = {
+            labels: ["0-10", "11-25", "26-40", "41-60", "60+"],
+            datasets: [{
+                label: "Avg Time Spent (min)",
+                backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: [16, 26, 45, 32, 12]
+            }, {
+                label: "Avg # Of Items",
+                backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                data: [6, 8, 14, 12, 3]
+            },{
+                label: "Overall Value (1-10)",
+                backgroundColor: o(window.chartColors.green).alpha(.5).rgbString(),
+                borderColor: window.chartColors.green,
+                data: [3, 5, 10, 8, 3]
+            }]
+        },
+        racef = {
+            labels: ["White", "Asian - South", "Asian - Southeast", "African", "Hispanic/Latino", "American Indian"],
+            datasets: [{
+                label: "Avg Time Spent (min)",
+                backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: [36, 32, 26, 30, 38, 25]
+            }, {
+                label: "Avg # Of Items",
+                backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                data: [14, 13, 13, 10, 16, 8]
+            },{
+                label: "Overall Value (1-10)",
+                backgroundColor: o(window.chartColors.green).alpha(.5).rgbString(),
+                borderColor: window.chartColors.green,
+                data: [8, 8, 5, 7, 8, 5]
             }]
         };
+        
     window.onload = function() {
         if (document.getElementById("canvas")) {
             var e = document.getElementById("canvas").getContext("2d");
@@ -28576,7 +28622,51 @@
                     },
                     title: {
                         display: !1,
-                        text: "Chart.js Horizontal Bar Chart"
+                        text: "Chart.js Gender Horizontal Bar Chart"
+                    }
+                }
+            })
+        }
+        if (document.getElementById("race-chart-horiz-bar")) {
+            var g = document.getElementById("race-chart-horiz-bar").getContext("2d");
+            window.myHorizontalBar = new r.a(g, {
+                type: "horizontalBar",
+                data: racef,
+                options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    },
+                    responsive: !0,
+                    legend: {
+                        position: "right"
+                    },
+                    title: {
+                        display: !1,
+                        text: "Chart.js Gender Horizontal Bar Chart"
+                    }
+                }
+            })
+        }
+        if (document.getElementById("age-chart-horiz-bar")){
+            var g = document.getElementById("age-chart-horiz-bar").getContext("2d");
+            window.myAgeHorizontalBar = new r.a(g, {
+                type: "bar",
+                data: agef,
+                options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    },
+                    responsive: !0,
+                    legend: {
+                        position: "right"
+                    },
+                    title: {
+                        display: !1,
+                        text: "Chart.js Age Bar Chart"
                     }
                 }
             })

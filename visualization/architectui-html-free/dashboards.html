@@ -34,8 +34,9 @@
                                         <i class="pe-7s-clock icon-gradient bg-mean-fruit">
                                         </i>
                                     </div>
-                                    <div><b>Realtime Analytics</b>
-                                        <div class="page-title-subheading">This dashboard displays social distancing and mask-covering analytics in real time.
+                                    <div><b>Customer Analytics</b>
+                                        <div class="page-title-subheading">This dashboard displays trends relating to customer behavior.
+
                                         </div>
                                     </div>
                                 </div>
@@ -66,11 +67,11 @@
                                 <div class="card mb-3 widget-content bg-midnight-bloom">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Total Count In Frame</div>
+                                            <div class="widget-heading">Total In-Store Visitors</div>
                                             <div class="widget-subheading"># of people</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span id="totalCountVal">13</span></div>
+                                            <div class="widget-numbers text-white"><span id="totalCountVal">46</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -79,11 +80,11 @@
                                 <div class="card mb-3 widget-content bg-arielle-smile">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Undistanced Count</div>
-                                            <div class="widget-subheading">if < 6 feet</div>
+                                            <div class="widget-heading">Average Time Spent</div>
+                                            <div class="widget-subheading">mins</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span id="undistancedCountVal">8</span></div>
+                                            <div class="widget-numbers text-white"><span id="undistancedCountVal">15.2</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -92,11 +93,11 @@
                                 <div class="card mb-3 widget-content bg-grow-early">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Unmasked Count</div>
-                                            <div class="widget-subheading"># without face mask</div>
+                                            <div class="widget-heading">Conversion Rate</div>
+                                            <div class="widget-subheading">total / purchases</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span id="unmaskedCountVal">3</span></div>
+                                            <div class="widget-numbers text-white"><span id="unmaskedCountVal">21.4%</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -105,11 +106,11 @@
                                 <div class="card mb-3 widget-content bg-premium-dark">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Violations Count</div>
-                                            <div class="widget-subheading"># of people violating regulations</div>
+                                            <div class="widget-heading">Total Customers</div>
+                                            <div class="widget-subheading"># of customers</div>
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning"><span id="violationsCountVal">11</span></div>
+                                            <div class="widget-numbers text-warning"><span id="violationsCountVal">3398</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -121,18 +122,19 @@
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
-                                            Birds-Eye View
+                                            Heat Map
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         
                                         <div class="tab-content">
-                                            <div id="map_plot">
-                                            </div>
+                                            <!--<div id="map_plot"></div>-->
+                                            <img src="assets/images/heatmap.jpg" width="825px" height="425px"></img>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <!--
                             <div class="col-md-12 col-lg-6">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header">
@@ -149,6 +151,7 @@
                                     
                                 </div>
                             </div>
+                        -->
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-xl-4">
@@ -156,11 +159,11 @@
                                     <div class="widget-content-outer">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left">
-                                                <div class="widget-heading">Time Elapsed</div>
+                                                <div class="widget-heading">Most Popular Aisle</div>
                                                 <!--<div class="widget-subheading">(hours)</div>-->
                                             </div>
                                             <div class="widget-content-right">
-                                                <div class="widget-numbers text-success">498 hours</div>
+                                                <div class="widget-numbers text-success">7</div>
                                             </div>
                                         </div>
                                     </div>
@@ -171,11 +174,11 @@
                                     <div class="widget-content-outer">
                                         <div class="widget-content-wrapper">
                                             <div class="widget-content-left">
-                                                <div class="widget-heading">Total Count Since Start</div>
+                                                <div class="widget-heading">Most Purchased Product</div>
                                                 <!--<div class="widget-subheading">Revenue streams</div>-->
                                             </div>
                                             <div class="widget-content-right">
-                                                <div class="widget-numbers text-warning">1882</div>
+                                                <div class="widget-numbers text-warning">Water Bottles</div>
                                             </div>
                                         </div>
                                     </div>
@@ -191,8 +194,8 @@
                                         <i class="pe-7s-graph2 icon-gradient bg-mean-fruit">
                                         </i>
                                     </div>
-                                    <div><b>Aggregate Analytics</b>
-                                        <div class="page-title-subheading">This dashboard displays long-term social distancing and mask-wearing trends.
+                                    <div><b>Demographics</b>
+                                        <div class="page-title-subheading">Race, age, gender, etc.
                                         </div>
                                     </div>
                                 </div>
@@ -223,11 +226,11 @@
                                 <div class="card mb-3 widget-content bg-midnight-bloom">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Enforcement Status</div>
+                                            <div class="widget-heading">Most Common Race</div>
                                             <!--<div class="widget-subheading">Good, Medium, Bad, Critical</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span id = "enforcement_status_val">Critical</span></div>
+                                            <div class="widget-numbers text-white"><span id = "enforcement_status_val">Asian-South</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -236,11 +239,11 @@
                                 <div class="card mb-3 widget-content bg-arielle-smile">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Average Distance (ft)</div>
+                                            <div class="widget-heading">Average Age</div>
                                             <!--<div class="widget-subheading">Distance between people</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span id = "average_dist_val">5.2</span></div>
+                                            <div class="widget-numbers text-white"><span id = "average_dist_val">32.6</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -249,11 +252,11 @@
                                 <div class="card mb-3 widget-content bg-grow-early">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Average # Unmasked</div>
+                                            <div class="widget-heading">Most Common Gender</div>
                                             <!--<div class="widget-subheading"># without face mask</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-white"><span id = "average_unmasked_val">8</span></div>
+                                            <div class="widget-numbers text-white"><span id = "average_unmasked_val">Female</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -262,11 +265,11 @@
                                 <div class="card mb-3 widget-content bg-premium-dark">
                                     <div class="widget-content-wrapper text-white">
                                         <div class="widget-content-left">
-                                            <div class="widget-heading">Average # Undistanced</div>
+                                            <div class="widget-heading">Total # Of Families</div>
                                             <!--<div class="widget-subheading">Revenue streams</div>-->
                                         </div>
                                         <div class="widget-content-right">
-                                            <div class="widget-numbers text-warning"><span id = "average_undistanced_val">20</span></div>
+                                            <div class="widget-numbers text-warning"><span id = "average_undistanced_val">98</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -309,16 +312,64 @@
                                     <div class="card-header-tab card-header">
                                         <div class="card-header-title">
                                             <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
-                                            Cross Location Visitation
+                                            Gender Comparison
                                         </div>
                                         <div class="btn-actions-pane-right">
                                         </div>
                                     </div>
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade active show" id="tab-eg-55">
-                                            <div class="widget-chart p-3">
-                                                <div style="height: 240px">
-                                                    <canvas id="chart-horiz-bar"></canvas>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="card tab-pane fade active show" id="tab-eg-55">
+                                                <div class="widget-chart p-3">
+                                                    <div style="height: 425px">
+                                                        <canvas id="chart-horiz-bar"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+                                            Age Comparison
+                                        </div>
+                                        <div class="btn-actions-pane-right">
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="card tab-pane fade active show" id="tab-eg-55">
+                                                <div class="widget-chart p-3">
+                                                    <div style="height: 425px">
+                                                        <canvas id="age-chart-horiz-bar"></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="mb-3 card">
+                                    <div class="card-header-tab card-header">
+                                        <div class="card-header-title">
+                                            <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+                                            Race Comparison
+                                        </div>
+                                        <div class="btn-actions-pane-right">
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div class="card tab-pane fade active show" id="tab-eg-55">
+                                                <div class="widget-chart p-3">
+                                                    <div style="height: 425px">
+                                                        <canvas id="race-chart-horiz-bar"></canvas>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -342,9 +393,10 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="text-center">Camera #</th>
-                                                    <th>Location</th>
-                                                    <th class="text-center">Violations per hour</th>
-                                                    <th class="text-center">Enforcement Status</th>
+                                                    <th>Aisle #</th>
+                                                    <th class="text-center">Most Popular Product</th>
+                                                    <th class="text-center">Number of purchases</th>
+                                                    <th class="text-center">Aisle Sales Status</th>
                                                     <th class="text-center">Actions</th>
                                                 </tr>
                                                 </thead>
@@ -355,18 +407,52 @@
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Times Square, NY</div>
+                                                                    <div class="widget-heading">1</div>
                                                                     <!--<div class="widget-subheading opacity-7">Web Developer</div>-->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">172</td>
+                                                    <td class="text-center">Toothpaste</td>
                                                     <td class="text-center">
-                                                        <div class="badge badge-pill badge-danger">Critical</div>
+                                                        68
                                                     </td>
                                                     <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">View Dashboard</button>
+                                                        <div class="badge badge-pill badge-success">Good</div>
+                                                    </td>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Move Toothpaste to ends of the ailse for higher customer attraction and sales</h6>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center text-muted">1</td>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">2</div>
+                                                                    <!--<div class="widget-subheading opacity-7">Etiam sit amet orci eget</div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">Notebooks</td>
+                                                    <td class="text-center">21</td>
+                                                    <td class="text-center">
+                                                        <div class="badge badge-pill badge-danger">Bad</div>
+                                                    </td>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Feedback</h6>
+                                                            <ul>
+                                                                <li>Move Toothpaste to ends of the ailse for higher customer attraction and sales.</li>
+                                                                <li>Keep all products in this ailse hygiene related instead of mixing.</li>
+                                                            </ul>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -375,18 +461,46 @@
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Las Vegas, NV</div>
-                                                                    <!--<div class="widget-subheading opacity-7">Etiam sit amet orci eget</div>-->
+                                                                    <div class="widget-heading">3</div>
+                                                                    <!--<div class="widget-subheading opacity-7">Lorem ipsum dolor sic</div>-->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">165</td>
+                                                    <td class="text-center">Door Mats</td>
+                                                    <td class="text-center">43</td>
                                                     <td class="text-center">
-                                                        <div class="badge badge-pill badge-danger">Critical</div>
+                                                        <div class="badge badge-pill badge-warning">Medium</div>
                                                     </td>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Move Toothpaste to ends of the ailse for higher customer attraction and sales</h6>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center text-muted">2</td>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">4</div>
+                                                                    <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">Toy Car</td>
+                                                    <td class="text-center">188</td>
                                                     <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-2" class="btn btn-primary btn-sm">View Dashboard</button>
+                                                        <div class="badge badge-pill badge-success">Good</div>
+                                                    </td>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Move Toothpaste to ends of the ailse for higher customer attraction and sales</h6>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -395,18 +509,46 @@
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Southlake, TX</div>
-                                                                    <!--<div class="widget-subheading opacity-7">Lorem ipsum dolor sic</div>-->
+                                                                    <div class="widget-heading">5</div>
+                                                                    <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">143</td>
+                                                    <td class="text-center">Cookies</td>
+                                                    <td class="text-center">199</td>
                                                     <td class="text-center">
-                                                        <div class="badge badge-pill badge-danger">Critical</div>
+                                                        <div class="badge badge-pill badge-success">Good</div>
                                                     </td>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Move Toothpaste to ends of the ailse for higher customer attraction and sales</h6>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center text-muted">3</td>
+                                                    <td>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="widget-heading">6</div>
+                                                                    <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">Frozen Pizza</td>
+                                                    <td class="text-center">42</td>
                                                     <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-3" class="btn btn-primary btn-sm">View Dashboard</button>
+                                                        <div class="badge badge-pill badge-warning">Medium</div>
+                                                    </td>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Move Toothpaste to ends of the ailse for higher customer attraction and sales</h6>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -415,78 +557,22 @@
                                                         <div class="widget-content p-0">
                                                             <div class="widget-content-wrapper">
                                                                 <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Milpitas, CA</div>
+                                                                    <div class="widget-heading">7</div>
                                                                     <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text-center">136</td>
-                                                    <td class="text-center">
-                                                        <div class="badge badge-pill badge-warning">Medium</div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">View Dashboard</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center text-muted">5</td>
-                                                    <td>
-                                                        <div class="widget-content p-0">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Atlanta, GA</div>
-                                                                    <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">96</td>
-                                                    <td class="text-center">
-                                                        <div class="badge badge-pill badge-warning">Medium</div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">View Dashboard</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center text-muted">6</td>
-                                                    <td>
-                                                        <div class="widget-content p-0">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Dallas, TX</div>
-                                                                    <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">42</td>
+                                                    <td class="text-center">Water Bottles</td>
+                                                    <td class="text-center">358</td>
                                                     <td class="text-center">
                                                         <div class="badge badge-pill badge-success">Good</div>
                                                     </td>
-                                                    <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">View Dashboard</button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center text-muted">7</td>
-                                                    <td>
-                                                        <div class="widget-content p-0">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left flex2">
-                                                                    <div class="widget-heading">Rochester, NY</div>
-                                                                    <!--<div class="widget-subheading opacity-7">UI Designer</div>-->
-                                                                </div>
-                                                            </div>
+                                                    <td class="text-center d-inline-block dropdown">
+                                                        <button type="button" id="PopoverCustomT-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary btn-sm">Improvements</button>
+                                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                                                            <h6 tabindex="-1" class="dropdown-header">Move Toothpaste to ends of the ailse for higher customer attraction and sales</h6>
                                                         </div>
-                                                    </td>
-                                                    <td class="text-center">31</td>
-                                                    <td class="text-center">
-                                                        <div class="badge badge-pill badge-success">Good</div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" id="PopoverCustomT-4" class="btn btn-primary btn-sm">View Dashboard</button>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -499,6 +585,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--
                             <div class="col-md-12 col-lg-6">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header">
@@ -591,7 +678,7 @@
                                                 </div>
                                             </div>
                                             <br>
-                                            <p style="font-size: 20px"><b>Safe Spots</b><p> <!--THIS IS MISPLACED A LITTLE BIT ON THE DASHBOARD-->
+                                            <p style="font-size: 20px"><b>Safe Spots</b><p>
                                             <div class="pt-2 card-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -637,6 +724,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            -->
                             </div>
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
