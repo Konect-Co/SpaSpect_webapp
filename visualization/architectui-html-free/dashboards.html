@@ -11,6 +11,7 @@
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
     <!--
     =========================================================
     * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -21,7 +22,9 @@
     =========================================================
     * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     -->
-<link href="./main.css" rel="stylesheet"></head>
+    <link href="./main.css" rel="stylesheet">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+</head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
         <div class="app-main">
@@ -42,6 +45,8 @@
                                 </div>
 
                                 <div class="page-title-actions">
+                                    <button type="button" class="btn-shadow mr-3 btn btn-success" data-toggle="modal" data-target="#myModal" onclick="getJSON(); getDemographicsJSON()">Query Analytics</button>
+                                    
                                     <button type="button" data-toggle="tooltip" title="Notifications" data-placement="bottom" class="btn-shadow mr-3 btn btn-dark">
                                         <i class="fa fa-bell"></i>
                                     </button>
@@ -117,19 +122,30 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 col-lg-6">
+                            <div class="col-md-12">
                                 <div class="mb-3 card">
                                     <div class="card-header-tab card-header-tab-animation card-header">
                                         <div class="card-header-title">
                                             <i class="header-icon lnr-apartment icon-gradient bg-love-kiss"> </i>
                                             Heat Map
                                         </div>
+                                        <ul class="nav">
+                                            <li class="nav-item"><a href="javascript:void(0);" class="active nav-link">Graph</a></li>
+                                            <li class="nav-item"><a href="javascript:void(0);" class="nav-link second-tab-toggle">Description</a></li>
+                                        </ul>
                                     </div>
                                     <div class="card-body">
-                                        
                                         <div class="tab-content">
+                                            <div class="tab-pane fade show active" id="tabs-eg-77">
+                                                <div class="mb-3 widget-chart widget-chart2 text-left w-100">
+                                                    <div class="widget-chat-wrapper-outer">
+                                                        <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
                                             <!--<div id="map_plot"></div>-->
-                                            <img src="assets/images/heatmap.jpg" width="825px" height="425px"></img>
+                                                            <img src="assets/images/heatmap.jpg" width="950px" height="500px"></img>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -729,7 +745,179 @@
                 <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
-<script type="text/javascript" src="./assets/scripts/main.js"></script></body>
+
+    <!-- Analytics Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                    <h4 class="modal-title">Stored Analytics: <span id="cameraName"></span></h4>
+                    <h6>current configuration: past <span id="configHours"></span> hrs</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="widget-content-wrapper">
+                        <div class="widget-content-left">
+                            <div class="accordion" id="accordionExample">
+                              <div class="card">
+                                <div class="card-header" id="headingOne">
+                                  <h2 class="mb-0">
+                                    <button class="btn widget-numbers fsize-3" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      Total People
+                                    </button>
+                                  </h2>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                  <div class="card-body">
+                                        <canvas id="numppl-line"></canvas>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="widget-content-left">
+                        <div class="accordion" id="accordionExample">
+                          <div class="card">
+                            <div class="card-header" id="headingOne">
+                              <h2 class="mb-0">
+                                <button class="btn widget-numbers fsize-3" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" onclick="getDemographicsJSON()">
+                                  Demographics
+                                </button>
+                              </h2>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                              <div class="card-body">
+                                <br>
+                                <h6 class="fsize-3">Male</h6>
+                                <br>
+                                <p id="showMaleData"></p>
+                                <br>
+                                <h6 class="fsize-3">Female</h6>
+                                <br>
+                                <p id="showFemaleData"></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 1px solid #d3d3d3">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" src="./assets/scripts/main.js"></script>
+<!--<script type="text/javascript" src="./assets/scripts/main2.js"></script>-->
+
+<script type="text/javascript">
+    function getJSON(){
+        var req = new XMLHttpRequest();
+        req.overrideMimeType("application/json");
+        req.open('GET', "./assets/json/config.json", true);
+        req.onload  = function() {
+           var configJson = JSON.parse(req.responseText);
+           configSpan = document.getElementById("configHours");
+           configSpan.textContent = configJson["frequency"];
+           cameraName = document.getElementById("cameraName");
+           cameraName.textContent = configJson["name"];
+        };
+        req.send(null);
+    }
+
+    function getDemographicsJSON(){
+        var req = new XMLHttpRequest();
+        req.overrideMimeType("application/json");
+        req.open('GET', "./assets/json/2021-04-2213:55:25.472658.json", true);
+        req.onload  = function() {
+           var configJson = JSON.parse(req.responseText);
+           var maleData = configJson["intersectionality"][0];
+           var femaleData = configJson["intersectionality"][1];
+           console.log(maleData);
+           console.log(femaleData);
+
+           var headers = ["Age", "White", "Black", "Asian", "Indian", "Other"];
+
+           var table = document.createElement("table");
+           var table2 = document.createElement("table");
+
+           var tr = table.insertRow(-1); 
+
+           for(var i = 0 ; i < headers.length ; i++){
+                var th = document.createElement("th");
+                th.innerHTML = headers[i];
+                tr.appendChild(th);
+           }
+
+           var age_categories = [0, 10, 20, 40, 65];
+           var race_categories = ["White", "Black", "Asian", "Indian", "Other"];
+
+           for(var i = 0 ; i < age_categories.length ; i++){
+                tr = table.insertRow(-1);
+
+                var tabCell = tr.insertCell(-1);
+                var tabCell2 = tr.insertCell(-1);
+                var tabCell3 = tr.insertCell(-1);
+                var tabCell4 = tr.insertCell(-1);
+                var tabCell5 = tr.insertCell(-1);
+                var tabCell6 = tr.insertCell(-1);
+
+                tabCell.innerHTML = age_categories[i];
+                tabCell2.innerHTML = maleData[0][i];
+                tabCell3.innerHTML = maleData[1][i];
+                tabCell4.innerHTML = maleData[2][i];
+                tabCell5.innerHTML = maleData[3][i];
+                tabCell6.innerHTML = maleData[4][i];
+           }
+
+
+           var divContainer = document.getElementById("showMaleData");
+            divContainer.innerHTML = "";
+            divContainer.appendChild(table);
+
+
+            var tr = table2.insertRow(-1); 
+
+            for(var i = 0 ; i < headers.length ; i++){
+                 var th = document.createElement("th");
+                 th.innerHTML = headers[i];
+                 tr.appendChild(th);
+            }
+
+            for(var i = 0 ; i < age_categories.length ; i++){
+                 tr = table2.insertRow(-1);
+
+                 var tabCell = tr.insertCell(-1);
+                 var tabCell2 = tr.insertCell(-1);
+                 var tabCell3 = tr.insertCell(-1);
+                 var tabCell4 = tr.insertCell(-1);
+                 var tabCell5 = tr.insertCell(-1);
+                 var tabCell6 = tr.insertCell(-1);
+
+                 tabCell.innerHTML = age_categories[i];
+                 tabCell2.innerHTML = femaleData[0][i];
+                 tabCell3.innerHTML = femaleData[1][i];
+                 tabCell4.innerHTML = femaleData[2][i];
+                 tabCell5.innerHTML = femaleData[3][i];
+                 tabCell6.innerHTML = femaleData[4][i];
+            }
+
+
+            var divContainer = document.getElementById("showFemaleData");
+             divContainer.innerHTML = "";
+             divContainer.appendChild(table2);
+        };
+        req.send(null);
+    }
+</script>
+
+</body>
 <script>
     var x_values = [-25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25];
     var y_values = [-15, 15, -25, -5, -5, 0, 10, 5, -20, -15, 20];
@@ -945,4 +1133,5 @@ dashboardDataRequest.onload = function(e) {
     mapLayout.mapbox.center.lon = full_data.realtime.overheadMapData.center[1];
     Plotly.newPlot('map_plot', mapData, mapLayout);
 </script>
+
 </html>

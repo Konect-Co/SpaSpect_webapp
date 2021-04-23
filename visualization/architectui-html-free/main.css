@@ -9,6 +9,21 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
 
+th, td, p, input, h3 {
+    font:15px 'Segoe UI';
+}
+
+table, th, td {
+    border: solid 1px #ddd;
+	border-collapse: collapse;
+	padding: 2px 3px;
+	text-align: center;
+}
+
+th {
+    font-weight:bold;
+}
+
 .border-primary {
 	border-color: #3f6ad8
 }
@@ -6250,7 +6265,7 @@ a.close.disabled {
 	border-bottom: 1px solid #e9ecef;
 	border-top-left-radius: .3rem;
 	border-top-right-radius: .3rem
-}
+}	
 
 .modal-header .close {
 	padding: 1rem 1rem;

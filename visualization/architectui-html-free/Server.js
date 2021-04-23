@@ -32,7 +32,7 @@ app.use(
     extended: true
   })
 );
-
+/*
 function updateRecord(realtimeData) {
 	var con = mysql.createConnection({
 	    host: 'localhost',
@@ -91,6 +91,7 @@ function updateRecord(realtimeData) {
 
     con.end();
 }
+*/
 
 app.post('/sendData', function (req, res) {
   /*
@@ -99,7 +100,7 @@ app.post('/sendData', function (req, res) {
 	2. Add data to the MySql Database.
 	3. Return/Conclude the function as necessary.
   */
-
+/*
   var data = "";
   req.on('data', chunk => data += chunk );
 
@@ -130,7 +131,7 @@ var data = "";
 	    });
     });
   });
-
+*/
   /*
 	Return:
 		- people vs time graph

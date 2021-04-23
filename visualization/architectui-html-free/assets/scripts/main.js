@@ -28288,6 +28288,31 @@
     }).call(this, n(1))
 }, function(e, t, n) {
     "use strict";
+    var req = new XMLHttpRequest();
+    req.overrideMimeType("application/json");
+    req.open('GET', "./assets/json/2021-04-2213:55:25.472658.json", true);
+    var timeLabels = [];
+    var timeData = [];
+    req.onload  = function() {
+        var configJson = JSON.parse(req.responseText);
+        var pplTimeStart = configJson["numPeople"]["numPeopleStartTime"];
+        var interval = configJson["numPeople"]["numPeopleInterval"];
+        var peopleVal = configJson["numPeople"]["numPeopleVal"];
+        console.log(peopleVal);
+        var date = new Date(pplTimeStart);
+
+        timeLabels.push(String(pplTimeStart));
+        for(var i = 0 ; i < peopleVal.length-1 ; i++){
+            date.setSeconds(date.getSeconds() + parseFloat(interval) * 60);
+            timeLabels.push(date.getFullYear() + "-" + String(parseInt(date.getMonth()) + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+        }
+        for(var j = 0 ; j < peopleVal.length ; j++){
+            timeData.push(peopleVal[j]);
+        }
+    };
+    //console.log(timeLabels);
+    //console.log(timeData);
+    req.send(null);
     n.r(t);
     var i = n(5),
         r = n.n(i),
@@ -28561,6 +28586,16 @@
                 borderColor: window.chartColors.green,
                 data: [8, 8, 5, 7, 8, 5]
             }]
+        },
+        peoplef = {
+            labels: timeLabels,
+            datasets: [{
+                label: "Number of People",
+                backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: timeData
+            }]
         };
         
     window.onload = function() {
@@ -28605,6 +28640,10 @@
             var m = document.getElementById("line-chart").getContext("2d");
             window.myLine = new r.a(m, p)
         }
+        if (document.getElementById("numppl-line")) {
+            var m = document.getElementById("numppl-line").getContext("2d");
+            window.myLine = new r.a(m, peoplef)
+        }
         if (document.getElementById("chart-horiz-bar")) {
             var g = document.getElementById("chart-horiz-bar").getContext("2d");
             window.myHorizontalBar = new r.a(g, {
@@ -28635,7 +28674,7 @@
                 options: {
                     elements: {
                         rectangle: {
-                            borderWidth: 2
+                            borderWidth: 1
                         }
                     },
                     responsive: !0,
@@ -28645,6 +28684,28 @@
                     title: {
                         display: !1,
                         text: "Chart.js Gender Horizontal Bar Chart"
+                    }
+                }
+            })
+        }
+        if (document.getElementById("numppl-line")) {
+            var g = document.getElementById("numppl-line").getContext("2d");
+            window.myHorizontalBar = new r.a(g, {
+                type: "line",
+                data: peoplef,
+                options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    },
+                    responsive: !0,
+                    legend: {
+                        position: "right"
+                    },
+                    title: {
+                        display: !1,
+                        text: "Number of People"
                     }
                 }
             })
