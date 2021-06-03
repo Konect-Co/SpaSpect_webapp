@@ -3,10 +3,8 @@ const app = express()
 const port = 3000
 
 app.use("", express.static(__dirname));
+app.use("", express.static("../../../../axis-acap2/"))
 
-//const fs = require('fs');
-//jsonString = fs.readFileSync('./config.json');
-//var json = JSON.stringify(JSON.parse(jsonString));
 
 app.listen(port, () => {
 	  console.log('Example app listening at port', port);

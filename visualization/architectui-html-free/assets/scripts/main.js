@@ -28290,14 +28290,32 @@
     "use strict";
     var req = new XMLHttpRequest();
     req.overrideMimeType("application/json");
-    req.open('GET', "./assets/json/2021-04-2213:55:25.472658.json", true);
+    req.open('GET', "analyticsGen/analyticsRecords/2021-04-2513:08:40.414063.json", true);
+
     var timeLabels = [];
     var timeData = [];
+    var maleData = [];
+    var femaleData = [];
+    var nullGenderData = [];
+    var whiteData = [];
+    var blackData = [];
+    var asianData = [];
+    var indianData = [];
+    var otherRaceData = [];
+    var nullRace = [];
+    var age1 = [];
+    var age2 = [];
+    var age3 = [];
+    var age4 = [];
+    var age5 = [];
+    var nullAge = [];
+
     req.onload  = function() {
         var configJson = JSON.parse(req.responseText);
         var pplTimeStart = configJson["numPeople"]["numPeopleStartTime"];
         var interval = configJson["numPeople"]["numPeopleInterval"];
-        var peopleVal = configJson["numPeople"]["numPeopleVal"];
+        var peopleVal = configJson["numPeople"]["numPeopleVal"]["numPeopleTotal"];
+        var allNumPpl = configJson["numPeople"]["numPeopleVal"];
         console.log(peopleVal);
         var date = new Date(pplTimeStart);
 
@@ -28309,9 +28327,31 @@
         for(var j = 0 ; j < peopleVal.length ; j++){
             timeData.push(peopleVal[j]);
         }
+        for(var i = 0 ; i < allNumPpl["numPeopleByGender"].length ; i++){
+            maleData.push(allNumPpl["numPeopleByGender"][i][0]);
+            femaleData.push(allNumPpl["numPeopleByGender"][i][1]);
+            nullGenderData.push(allNumPpl["numPeopleByGender"][i][2]);
+        }
+        for(var i = 0 ; i < allNumPpl["numPeopleByRace"].length ; i++){
+            whiteData.push(allNumPpl["numPeopleByRace"][i][0]);
+            blackData.push(allNumPpl["numPeopleByRace"][i][1]);
+            asianData.push(allNumPpl["numPeopleByRace"][i][2]);
+            indianData.push(allNumPpl["numPeopleByRace"][i][3]);
+            otherRaceData.push(allNumPpl["numPeopleByRace"][i][4]);
+            nullRace.push(allNumPpl["numPeopleByRace"][i][5]);
+        }
+        for(var i = 0 ; i < allNumPpl["numPeopleByAge"].length ; i++){
+            age1.push(allNumPpl["numPeopleByAge"][i][0]);
+            age2.push(allNumPpl["numPeopleByAge"][i][1]);
+            age3.push(allNumPpl["numPeopleByAge"][i][2]);
+            age4.push(allNumPpl["numPeopleByAge"][i][3]);
+            age5.push(allNumPpl["numPeopleByAge"][i][4]);
+            nullAge.push(allNumPpl["numPeopleByAge"][i][5]);
+        }
     };
     //console.log(timeLabels);
     //console.log(timeData);
+
     req.send(null);
     n.r(t);
     var i = n(5),
@@ -28590,11 +28630,113 @@
         peoplef = {
             labels: timeLabels,
             datasets: [{
-                label: "Number of People",
+                label: "Total Number of People",
                 backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
                 borderColor: window.chartColors.red,
                 borderWidth: 1,
                 data: timeData
+            }]
+        }, 
+        peopleGenderf = {
+            labels: timeLabels,
+            datasets: [{
+                label: "Number of People - Male",
+                backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                borderWidth: 1,
+                data: maleData
+            }, {
+                label: "Number of People - Female",
+                backgroundColor: o(window.chartColors.green).alpha(.5).rgbString(),
+                borderColor: window.chartColors.green,
+                borderWidth: 1,
+                data: femaleData
+            }, {
+                label: "Number of People - Unknown",
+                backgroundColor: o(window.chartColors.orange).alpha(.5).rgbString(),
+                borderColor: window.chartColors.orange,
+                borderWidth: 1,
+                data: nullGenderData
+            }]
+        },
+        peopleRacef = {
+            labels: timeLabels,
+            datasets: [{
+                label: "Number of People - White",
+                backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                borderWidth: 1,
+                data: whiteData
+            }, {
+                label: "Number of People - Black",
+                backgroundColor: o(window.chartColors.green).alpha(.5).rgbString(),
+                borderColor: window.chartColors.green,
+                borderWidth: 1,
+                data: blackData
+            }, {
+                label: "Number of People - Asian",
+                backgroundColor: o(window.chartColors.orange).alpha(.5).rgbString(),
+                borderColor: window.chartColors.orange,
+                borderWidth: 1,
+                data: asianData
+            }, {
+                label: "Number of People - Indian",
+                backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: indianData
+            }, {
+                label: "Number of People - Other",
+                backgroundColor: o(window.chartColors.yellow).alpha(.5).rgbString(),
+                borderColor: window.chartColors.yellow,
+                borderWidth: 1,
+                data: otherRaceData
+            }, {
+                label: "Number of People - Unknown",
+                backgroundColor: o(window.chartColors.purple).alpha(.5).rgbString(),
+                borderColor: window.chartColors.purple,
+                borderWidth: 1,
+                data: nullRace
+            }]
+        }, 
+        peopleAgef = {
+            labels: timeLabels,
+            datasets: [{
+                label: "Number of People - 0-10",
+                backgroundColor: o(window.chartColors.blue).alpha(.5).rgbString(),
+                borderColor: window.chartColors.blue,
+                borderWidth: 1,
+                data: age1
+            }, {
+                label: "Number of People - 11-25",
+                backgroundColor: o(window.chartColors.green).alpha(.5).rgbString(),
+                borderColor: window.chartColors.green,
+                borderWidth: 1,
+                data: age2
+            }, {
+                label: "Number of People - 26-40",
+                backgroundColor: o(window.chartColors.orange).alpha(.5).rgbString(),
+                borderColor: window.chartColors.orange,
+                borderWidth: 1,
+                data: age3
+            }, {
+                label: "Number of People - 41-60",
+                backgroundColor: o(window.chartColors.red).alpha(.5).rgbString(),
+                borderColor: window.chartColors.red,
+                borderWidth: 1,
+                data: age4
+            }, {
+                label: "Number of People - 60+",
+                backgroundColor: o(window.chartColors.yellow).alpha(.5).rgbString(),
+                borderColor: window.chartColors.yellow,
+                borderWidth: 1,
+                data: age5
+            }, {
+                label: "Number of People - Unknown",
+                backgroundColor: o(window.chartColors.purple).alpha(.5).rgbString(),
+                borderColor: window.chartColors.purple,
+                borderWidth: 1,
+                data: nullAge
             }]
         };
         
@@ -28639,10 +28781,6 @@
         if (document.getElementById("line-chart")) {
             var m = document.getElementById("line-chart").getContext("2d");
             window.myLine = new r.a(m, p)
-        }
-        if (document.getElementById("numppl-line")) {
-            var m = document.getElementById("numppl-line").getContext("2d");
-            window.myLine = new r.a(m, peoplef)
         }
         if (document.getElementById("chart-horiz-bar")) {
             var g = document.getElementById("chart-horiz-bar").getContext("2d");
@@ -28693,6 +28831,72 @@
             window.myHorizontalBar = new r.a(g, {
                 type: "line",
                 data: peoplef,
+                options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    },
+                    responsive: !0,
+                    legend: {
+                        position: "right"
+                    },
+                    title: {
+                        display: !1,
+                        text: "Number of People"
+                    }
+                }
+            })
+        }
+        if (document.getElementById("numppl-gender-line")) {
+            var g = document.getElementById("numppl-gender-line").getContext("2d");
+            window.myHorizontalBar = new r.a(g, {
+                type: "line",
+                data: peopleGenderf,
+                options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    },
+                    responsive: !0,
+                    legend: {
+                        position: "right"
+                    },
+                    title: {
+                        display: !1,
+                        text: "Number of People - Gender"
+                    }
+                }
+            })
+        }
+        if (document.getElementById("numppl-race-line")) {
+            var g = document.getElementById("numppl-race-line").getContext("2d");
+            window.myHorizontalBar = new r.a(g, {
+                type: "line",
+                data: peopleRacef,
+                options: {
+                    elements: {
+                        rectangle: {
+                            borderWidth: 2
+                        }
+                    },
+                    responsive: !0,
+                    legend: {
+                        position: "right"
+                    },
+                    title: {
+                        display: !1,
+                        text: "Number of People"
+                    }
+                }
+            })
+        }
+        if (document.getElementById("numppl-age-line")) {
+            var g = document.getElementById("numppl-age-line").getContext("2d");
+            window.myHorizontalBar = new r.a(g, {
+                type: "line",
+                data: peopleAgef,
                 options: {
                     elements: {
                         rectangle: {
