@@ -13,6 +13,9 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="leaflet.heat.js"></script>
     <!--
     =========================================================
     * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -25,6 +28,9 @@
     -->
     <link href="./main.css" rel="stylesheet">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+    <style type="text/css">
+        #map {position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+    </style>
 </head>
 <body>
     <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
@@ -69,7 +75,11 @@
                                 </div>    
                             </div>
                         </div>
-                        <video width="100%" controls><source src="Output_out.mp4" type="video/mp4"></source></video>
+                        <!-- <iframe src="https://www.google.com/maps/embed?" width="600" height="450" id="map" style="border:2px;" allowfullscreen="" loading="lazy"></iframe>-->
+                        <div class="container">
+                            <div id="map"></div>
+                        </div>
+
                         <!--
                         <div id="caContent">
                             <div class="row">
@@ -830,7 +840,57 @@
     </div>
 
 <script type="text/javascript" src="./assets/scripts/main.js"></script>
+<!-- <script type="text/javascript" src="./assets/scripts/heatmap.js"></script> -->
 <!--<script type="text/javascript" src="./assets/scripts/main2.js"></script>-->
+
+<script type="text/javascript">
+    var map = L.map('map').setView([0,0], 1);
+
+    L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=amtG9YDNUxzYgWJqZlup', {
+        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+    }).addTo(map)
+
+    var heatData = [];
+
+    var req = new XMLHttpRequest();
+    req.overrideMimeType("application/json");
+    req.open('GET', "analyticsGen/analyticsRecords/2021-06-0815:49:14.371359.json", true);
+    req.onload  = function() {
+       var json = JSON.parse(req.responseText);
+
+       for(var i = 0 ; i < json["lonlat"].length ; i++){
+            heatData.push(json["lonlat"][i]);
+       }
+    };
+    req.send(null);
+
+    console.log("Heat Data: ", heatData);
+    // var heatData = [
+    //     [37.31268511969728, -121.7778105863489, 0.1],
+    //     [23.722657, 90.412525, 0.1],
+    //     [23.701936, 90.415782, 0.1],
+    //     [23.722099, 90.413981, 0.1],
+    //     [23.703582, 90.414536, 0.1],
+    //     [23.699689, 90.421493, 0.1],
+    //     [23.705727, 90.412281, 0.1],
+    //     [23.720692, 90.414056, 0.1],
+    //     [23.706133, 90.412448, 0.1],
+    //     [23.704677, 90.41166, 0.1],
+    //     [23.703912, 90.413993, 0.1]
+    // ];
+
+    var heat = L.heatLayer(heatData, {
+        radius: 5,
+        max: 1.0,
+        blur: 5,              
+        gradient: {
+            0.0: 'green',
+            0.5: 'yellow',
+            1.0: 'red'
+        },
+        minOpacity: 0.7
+    }).addTo(map);
+</script>
 
 <script type="text/javascript">
     function getJSON(){
@@ -850,7 +910,7 @@
     function getDemographicsJSON(){
         var req = new XMLHttpRequest();
         req.overrideMimeType("application/json");
-        req.open('GET', "analyticsGen/analyticsRecords/2021-04-2513:08:40.414063.json", true);
+        req.open('GET', "analyticsGen/analyticsRecords/latest.json", true);
         req.onload  = function() {
            var configJson = JSON.parse(req.responseText);
            var maleData = configJson["intersectionality"][0];

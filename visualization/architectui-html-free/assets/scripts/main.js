@@ -28290,7 +28290,7 @@
     "use strict";
     var req = new XMLHttpRequest();
     req.overrideMimeType("application/json");
-    req.open('GET', "analyticsGen/analyticsRecords/2021-04-2513:08:40.414063.json", true);
+    req.open('GET', "analyticsGen/analyticsRecords/latest.json", true);
 
     var timeLabels = [];
     var timeData = [];
